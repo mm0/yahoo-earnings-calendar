@@ -6,7 +6,7 @@ import json
 import logging
 import requests
 import time
-from yfinance.data import decrypt_cryptojs_aes
+from yfinance.data import decrypt_cryptojs_aes_stores
 
 BASE_URL = 'https://finance.yahoo.com/calendar/earnings'
 BASE_STOCK_URL = 'https://finance.yahoo.com/quote'
@@ -40,7 +40,7 @@ class YahooEarningsCalendar(object):
         page_data_string = [row for row in page_content.split(
             '\n') if row.startswith('root.App.main = ')][0][:-1]
         page_data_string = page_data_string.split('root.App.main = ', 1)[1]
-        return decrypt_cryptojs_aes(json.loads(page_data_string))
+        return decrypt_cryptojs_aes_stores(json.loads(page_data_string))
 
     def get_next_earnings_date(self, symbol):
         """Gets the next earnings date of symbol
